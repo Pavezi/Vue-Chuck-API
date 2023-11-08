@@ -1,11 +1,11 @@
 <template>
-<div class="speech-bubble-component">
+  <div class="speech-bubble">
     {{text}}
-</div>
+  </div>
 </template>
 <script>
 export default {
-    name: 'SpeechBuuble',
+    name: 'SpeechBubbleComponent',
     props: ["text"],
     data: function() {
         return {}
@@ -14,23 +14,29 @@ export default {
 }
 </script>
 <style scoped>
-.speech-bubble-component {
-    position: relative;
-    background: #00a9bb;
-    border-radius: .4em;
+.speech-bubble {
+  position: relative;
+  background: #f4f4f4;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 10px;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  left: 50%;
 }
-.speech-bubble-component:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border: 51px solid transparent;
-    border-top-color: #00a9bb;
-    border-bottom: 0;
-    border-left: 0;
-    margin-left: -25.5px;
-    margin-bottom: -51px;
+
+.speech-bubble:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: #f4f4f4;
+  border-bottom: 0;
+  margin-left: -10px;
+  margin-bottom: -10px;
 }
 </style>

@@ -1,62 +1,52 @@
 <template>
-  <div id="chuck-norris">
-    <p>I am Chuck Norris</p>
-    <speech-bubble v-if="currentJoke" :text="currentJoke"></speech-bubble>
-    <img src="../assets/chuck.jpg" id="chuck-norris__image" >
+  <div id="chuck">
+    <p>I am Chuck! Chuck Norris</p>
+    <speech-bubble-component v-if="currentJoke" :text="currentJoke"></speech-bubble-component>
+    <img src="../assets/chuck.jpg" alt="Chuck Norris" id="chuck_img">
     <button @click="fetchRandomJoke">
-      Tell me a joke
+      Chuck! Tell me a joke
     </button>
   </div>
 </template>
 
 <script>
-import SpeechBubble from './SpeechBubbleComponent.vue';
-
-const API_RANDOM_JOKE_ENDPOINT = 'https://api.chucknorris.io/jokes/random';
+import SpeechBubbleComponent from './SpeechBubbleComponent.vue';
 
 export default {
-  name: 'ChuckNorris',
+  name: 'Chuck',
   components: {
-    'speech-bubble': SpeechBubble
+    'speech-bubble-component': SpeechBubbleComponent
   },
   data() {
     return {
-      currentJoke: null
+      currentJoke: '',
+      error: null
     };
   },
   methods: {
-    fetchRandomJoke() {
-      fetch(API_RANDOM_JOKE_ENDPOINT)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log(data);
-          this.currentJoke = data.value;
-        })
-        .catch(error => {
-          console.error('There was an error fetching the joke:', error);
-          this.currentJoke = 'Failed to fetch joke.';
-        });
+    async fetchRandomJoke() {
+      try {
+        const response = await fetch('https://api.chucknorris.io/jokes/random');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        this.currentJoke = data.value;
+      } catch (error) {
+        this.error = error.message;
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-#chuck-norris {
+#chuck {
     position: relative;
+    text-align: center;
 }
-#chuck-norris__joke__container {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-#chuck-norris__image {
+
+#chuck_img {
     height: 200px;
-    transition: all 0.2s ease-in;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 </style>
